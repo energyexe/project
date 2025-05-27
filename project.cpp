@@ -1,12 +1,14 @@
 ﻿#include <iostream>
 #include <string>
 #include <sstream>
+#include <type_traits> 
 #include "Parallelepiped.h"
 #include "Kub.h"
 #include "Kvadrat.h"
 #include "Rectangle.h"
 using namespace std;
 
+//ввод чисел
 int Get_number()
 {
     int input;
@@ -22,7 +24,6 @@ int Get_number()
         }
     }
 }
-
 double Get_double() {
     double input;
     while (true) {
@@ -38,6 +39,8 @@ double Get_double() {
         }
     }
 }
+
+//менюшки
 void parMenu() {
     cout << "\n--- МЕНЮ ПАРАЛЛЕЛЕПИПЕДА ---";
     cout << "\n1 - показать текущие размеры";
@@ -76,10 +79,116 @@ void rectangleMenu() {
     cout << "\n0 - выход\n";
 }
 
+//функции
+template<typename T>
+Parallelepiped<T> createParallelepiped() {
+    while (true) {
+        cout << "Вы хотите использовать значения по умолчанию? \n1 - да \n2 - нет\n> ";
+        int defchoice = Get_number();
+
+        if (defchoice == 1) {
+            return Parallelepiped<T>();
+        }
+        else if (defchoice == 2) {
+            T a, b, h;
+            cout << "Введите длины сторон (a b h): ";
+            if constexpr (is_same<T, int>::value) {
+                a = Get_number(); b = Get_number(); h = Get_number();
+            }
+            else {
+                a = Get_double(); b = Get_double(); h = Get_double();
+            }
+            return Parallelepiped<T>(a, b, h);
+        }
+        else {
+            system("cls");
+            cout << "Неверный ввод. Повторите попытку.\n";
+        }
+    }
+}
+template<typename T>
+Kub<T> createKub() {
+    while (true) {
+        cout << "Вы хотите использовать значения по умолчанию? \n1 - да \n2 - нет\n> ";
+        int defchoice = Get_number();
+
+        if (defchoice == 1) {
+            return Kub<T>();
+        }
+        else if (defchoice == 2) {
+            T a;
+            cout << "Введите длину стороны: ";
+            if constexpr (is_same<T, int>::value) {
+                a = Get_number();
+            }
+            else {
+                a = Get_double();
+            }
+            return Kub<T>(a);
+        }
+        else {
+            system("cls");
+            cout << "Неверный ввод. Повторите попытку.\n";
+        }
+    }
+}
+template<typename T>
+Square<T> createSquare() {
+    while (true) {
+        cout << "Вы хотите использовать значения по умолчанию? \n1 - да \n2 - нет\n> ";
+        int defchoice = Get_number();
+
+        if (defchoice == 1) {
+            return Square<T>();
+        }
+        else if (defchoice == 2) {
+            T a;
+            cout << "Введите длину стороны: ";
+            if constexpr (is_same<T, int>::value) {
+                a = Get_number();
+            }
+            else {
+                a = Get_double();
+            }
+            return Square<T>(a);
+        }
+        else {
+            system("cls");
+            cout << "Неверный ввод. Повторите попытку.\n";
+        }
+    }
+}
+template<typename T>
+Rectangle<T> createRectangle() {
+    while (true) {
+        cout << "Вы хотите использовать значения по умолчанию? \n1 - да \n2 - нет\n> ";
+        int defchoice = Get_number();
+
+        if (defchoice == 1) {
+            return Rectangle<T>();
+        }
+        else if (defchoice == 2) {
+            T a, b;
+            cout << "Введите длину стороны: ";
+            if constexpr (is_same<T, int>::value) {
+                a = Get_number(); b = Get_number();
+            }
+            else {
+                a = Get_double(); b = Get_double();
+            }
+            return Rectangle<T>(a, b);
+        }
+        else {
+            system("cls");
+            cout << "Неверный ввод. Повторите попытку.\n";
+        }
+    }
+}
+
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    cout << "Привет!Представляем вам наш проект > < (смущаюсь)\n";
+    cout << "Привет!Представляем Вам наш проект!!!\n";
     while (true)
     {
         
@@ -99,10 +208,7 @@ int main()
         // Параллелепипед
         if (choice == 1) {
             if (typeChoice == 1) {
-                int a, b, c;
-                cout << "Введите длины сторон (a b c): ";
-                a = Get_number(); b = Get_number(); c = Get_number();
-                Parallelepiped<int> p(a, b, c);
+                Parallelepiped<int> p = createParallelepiped<int>();
                 int act;
                 do {
                     parMenu();
@@ -120,10 +226,7 @@ int main()
                 } while (act != 0);
             }
             else {
-                double a, b, c;
-                cout << "Введите длины сторон (a b c): ";
-                a = Get_double(); b = Get_double(); c = Get_double();
-                Parallelepiped<double> p(a, b, c);
+                Parallelepiped<double> p = createParallelepiped<double>();
                 int act;
                 do {
                     parMenu();
@@ -145,10 +248,7 @@ int main()
         // Куб
         else if (choice == 2) {
             if (typeChoice == 1) {
-                int a;
-                cout << "Введите сторону: ";
-                a = Get_number();
-                Kub<int> k(a);
+                Kub<int> k = createKub<int>();
                 int act;
                 do {
                     cubeMenu();
@@ -165,10 +265,7 @@ int main()
                 } while (act != 0);
             }
             else {
-                double a;
-                cout << "Введите сторону: ";
-                a = Get_double();
-                Kub<double> k(a);
+                Kub<double> k = createKub<double>();
                 int act;
                 do {
                     cubeMenu();
@@ -189,10 +286,7 @@ int main()
         // Квадрат
         else if (choice == 3) {
             if (typeChoice == 1) {
-                int a;
-                cout << "Введите сторону: ";
-                a = Get_number();
-                Square<int> square(a);
+                Square<int> square = createSquare<int>();
                 int act;
                 do {
                     squareMenu();
@@ -208,10 +302,7 @@ int main()
                 } while (act != 0);
             }
             else {
-                double a;
-                cout << "Введите сторону: ";
-                a = Get_double();
-                Square<double> square(a);
+                Square<double> square = createSquare<double>();
                 int act;
                 do {
                     squareMenu();
@@ -231,10 +322,7 @@ int main()
         // Прямоугольник
         else if (choice == 4) {
             if (typeChoice == 1) {
-                int a, b;
-                cout << "Введите длины сторон (a b): ";
-                a = Get_number(); b = Get_number();
-                Rectangle<int> r(a, b);
+                Rectangle<int> r = createRectangle<int>();
                 int act;
                 do {
                     rectangleMenu();
@@ -243,7 +331,7 @@ int main()
                     case 1: system("cls"); r.show(); break;
                     case 2: system("cls"); cout << "Новая длина: "; r.changeA(Get_number()); break;
                     case 3: system("cls"); cout << "Новая ширина: "; r.changeB(Get_number()); break;
-                    case 4: system("cls"); r.printSquare(); break;
+                    case 4: system("cls"); r.findSquare(); break;
                     case 5: system("cls"); r.printPerimeter(); break;
                     case 6: system("cls"); r.printCircumcircleRadius(); break;
                     case 0: system("cls"); break;
@@ -252,10 +340,7 @@ int main()
                 } while (act != 0);
             }
             else {
-                double a, b;
-                cout << "Введите длины сторон (a b): ";
-                a = Get_double(); b = Get_double();
-                Rectangle<double> r(a, b);
+                Rectangle<double> r = createRectangle<double>();
                 int act;
                 do {
                     rectangleMenu();
@@ -264,7 +349,7 @@ int main()
                     case 1: system("cls"); r.show(); break;
                     case 2: system("cls"); cout << "Новая длина: "; r.changeA(Get_double()); break;
                     case 3: system("cls"); cout << "Новая ширина: "; r.changeB(Get_double()); break;
-                    case 4: system("cls"); r.printSquare(); break;
+                    case 4: system("cls"); r.findSquare(); break;
                     case 5: system("cls"); r.printPerimeter(); break;
                     case 6: system("cls"); r.printCircumcircleRadius(); break;
                     case 0: system("cls"); break;

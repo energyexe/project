@@ -6,11 +6,11 @@ template<typename T>
 class Kub : public Parallelepiped<T> {
 public:
     
-    Kub(T side) : Parallelepiped<T>(side, side, side) {}
+    Kub(T side=2) : Parallelepiped<T>(side, 0, 0) {}
 
     void changeSide(T value) {
         if (value > 0) {
-            this->a = this->b = this->h = value;
+            this->a = value;
             cout << "Ustanovleno novoe znachenie storoni kuba\n";
         }
         else {
@@ -19,7 +19,7 @@ public:
     }
 
     void findRadius() {
-        cout << "Radius opisannoy okruzhnosti: " << sqrt(3 * this->a * this->a) / 2 << endl;
+        cout << "Radius opisannoy okruzhnosti: " << (sqrt(2)* this->a) / 2 << endl;
     }
 
     void findSquare() override {
@@ -33,4 +33,4 @@ public:
     void show() {
         cout << "\nStorona kuba: " << this->a << endl;
     }
-};
+    };

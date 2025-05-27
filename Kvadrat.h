@@ -7,7 +7,7 @@ using namespace std;
 template<typename T>
 class Square : public Kub<T> {
 public:
-    Square(T side) : Kub<T>(side) {}
+    Square(T side=2) : Kub<T>(side) {}
 
     void changet(T value) {
         if (value > 0) {

@@ -3,25 +3,20 @@
 using namespace std;
 
 template<typename T>
-class Rectangle {
-protected:
-    T a, b; 
+class Rectangle : public Parallelepiped<T> {
 public:
-    Rectangle(T value_a = 1, T value_b = 1) {
-        a = value_a;
-        b = value_b;
-    }
-    ~Rectangle() {}
 
-    void setA(T value) { a = value; }
-    void setB(T value) { b = value; }
+    Rectangle (T value_a=2, T value_b=1) : Parallelepiped<T>(value_a, value_b, 0) {}
 
-    T getA() { return a; }
-    T getB() { return b; }
+    void setA(T value) { this->a = value; }
+    void setB(T value) { this->b = value; }
+
+    T getA() { return this->a; }
+    T getB() { return this->b; }
 
     void show() {
-        cout << "\nдлина - " << a;
-        cout << "\nширина - " << b << '\n';
+        cout << "\nдлина - " << this->a;
+        cout << "\nширина - " << this->b << '\n';
     }
 
     void changeSides(T value_a, T value_b) {
@@ -36,45 +31,39 @@ public:
     }
 
     void changeA(T value) {
-        if (value > 0) {
+        if ((value > 0) && (this->b != value)) {
             setA(value);
             cout << "Установлено новое значение длины. \n";
         }
         else {
-            cout << "Длина должна быть положительной, значение не установлено";
+            cout << "Некорректный ввод, значение не установлено";
         }
     }
 
     void changeB(T value) {
-        if (value > 0) {
+        if ((value > 0) && (this->a != value)) {
             setB(value);
             cout << "Установлено новое значение ширины. \n";
         }
         else {
-            cout << "Ширина должна быть положительной, значение не установлено";
+            cout << "Некорректный ввод, значение не установлено";
         }
     }
 
-    T findSquare() {
-        return a * b;
+    void findSquare() {
+        cout << "Площадь прямоугольника равна " << (this->a * this->b);
     }
-
-    void printSquare() {
-        cout << "Площадь прямоугольника равна " << findSquare() << "\n";
-    }
-
     
     T findPerimeter() {
-        return 2 * (a + b);
+        return 2 * (this->a + this->b);
     }
 
     void printPerimeter() {
         cout << "Периметр прямоугольника равен " << findPerimeter() << "\n";
     }
-
     
     double findCircumcircleRadius() {
-        return sqrt((double)(a * a + b * b)) / 2;
+        return sqrt((double)(this->a * this->a + this->b * this->b)) / 2;
     }
 
     void printCircumcircleRadius() {
